@@ -1,5 +1,4 @@
 import { getHorario } from "./horario.js";
-import { getDolar } from "./request-api.js";
 import imprimirCotacao from "./impimir-cotacao.js";
 
 const canvasGraficoDolar = document.getElementById("graficoDolar");
@@ -26,9 +25,12 @@ function adicionarDados(grafico, legenda, dados) {
     grafico.update();
 }
 
-setInterval(async () => {
-    const dolar = await getDolar();
+let workerDolar = new Worker("./workers/worker-dolar.js");
+workerDolar.postMessage("usd");
+
+workerDolar.addEventListener("message", (evento) => {
     const horario = getHorario();
-    adicionarDados(graficoDolar, horario, dolar);
-    imprimirCotacao("dolar", dolar);
-}, 5000);
+    const valorDolar = evento.data.ask;
+    adicionarDados(graficoDolar, horario, valorDolar);
+    imprimirCotacao("dólar", valorDolar);
+});
