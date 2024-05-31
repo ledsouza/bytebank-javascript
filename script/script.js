@@ -26,12 +26,11 @@ function adicionarDados(grafico, legenda, dados) {
 
 let workerDolar = new Worker("./script/workers/worker-dolar.js");
 workerDolar.postMessage("usd");
-
 workerDolar.addEventListener("message", (evento) => {
     const horario = getHorario();
     const valorDolar = evento.data.ask;
     adicionarDados(graficoDolar, horario, valorDolar);
-    imprimirCotacao("dólar", valorDolar);
+    imprimirCotacao("dolar", valorDolar);
 });
 
 const canvasGraficoIene = document.getElementById("graficoIene");
@@ -47,4 +46,13 @@ const graficoIene = new Chart(canvasGraficoIene, {
             },
         ],
     },
+});
+
+let workerIene = new Worker("./script/workers/worker-iene.js");
+workerIene.postMessage("iene");
+workerIene.addEventListener("message", (evento) => {
+    const horario = getHorario();
+    const valorIene = evento.data.ask;
+    adicionarDados(graficoIene, horario, valorIene);
+    imprimirCotacao("iene", valorIene);
 });

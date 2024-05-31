@@ -6,5 +6,5 @@ async function getDolar() {
 
 addEventListener("message", () => {
     getDolar();
-    setInterval(() => getDolar(), 5000);
+    setInterval(getDolar, 5000);
 });
