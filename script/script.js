@@ -1,5 +1,6 @@
 import { getHorario } from "./horario.js";
 import { getDolar } from "./request-api.js";
+import imprimirCotacao from "./impimir-cotacao.js";
 
 const canvasGraficoDolar = document.getElementById("graficoDolar");
 
@@ -29,4 +30,5 @@ setInterval(async () => {
     const dolar = await getDolar();
     const horario = getHorario();
     adicionarDados(graficoDolar, horario, dolar);
+    imprimirCotacao("dolar", dolar);
 }, 5000);
